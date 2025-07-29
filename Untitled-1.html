@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع ون بيس للقراصنة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .pirate-logo {
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+            transition: all 0.3s ease;
+        }
+        
+        .pirate-logo:hover {
+            transform: rotate(10deg);
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9));
+        }
+        
+        .character-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: #f59e0b;
+        }
+        
+        .fruit-type {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        
+        .fruit-type:hover {
+            transform: scale(1.05);
+            border-color: #f59e0b;
+        }
+        
+        .haki-type {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        
+        .haki-type:hover {
+            transform: scale(1.05);
+            border-color: #f59e0b;
+        }
+        
+        .challenge-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: #f59e0b;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #f59e0b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        .wave-animation {
+            animation: wave 3s infinite;
+        }
+        
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .show-content {
+            max-height: 1000px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="bg-gray-900 border-b border-amber-500 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="img/logo.png" alt="شعار ون بيس" class="h-12 pirate-logo">
+                <h1 class="text-2xl font-bold text-amber-400">قراصنة القشة</h1>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" onclick="document.getElementById('charactersModal').classList.remove('hidden')" class="text-white hover:text-amber-400 nav-link">الشخصيات</a>
+                <a href="#devil-fruits" class="text-white hover:text-amber-400 nav-link">فواكه الشيطان</a>
+                <a href="#haki" class="text-white hover:text-amber-400 nav-link">الهاكي</a>
+                <a href="#challenges" class="text-white hover:text-amber-400 nav-link">التحديات</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- الهيرو -->
+    <header class="relative h-96 flex items-center justify-center bg-[url('img/panar.gif')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-bold text-amber-400 mb-4 wave-animation">كن ملك القراصنة!</h2>
+            <p class="text-xl md:text-2xl text-white max-w-3xl mx-auto">استكشف عالم ون بيس واكتشف أسرار فواكه الشيطان وقوة الهاكي</p>
+            <button onclick="document.getElementById('storyArcsModal').classList.remove('hidden')" class="mt-8 bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                ابدأ الرحلة
+            </button>
+        </div>
+    </header>
+
+    <!-- الشخصيات الرئيسية -->
+    <section id="characters" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-400 mb-12">الشخصيات الرئيسية</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- لوفي -->
+                <div class="character-card rounded-lg overflow-hidden shadow-lg">
+                    <img src="img/luffy.jpg" alt="مونكي دي لوفي" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">مونكي دي لوفي</h3>
+                        <p class="text-gray-300 mb-4">قائد قراصنة القشة، آكل فاكهة الغومو الغومو، يطمح لأن يصبح ملك القراصنة.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">فاكهة الباراميسيا</span>
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">هاكي الملاحظة</span>
+                            <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">هاكي التسلط</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- زورو -->
+                <div class="character-card rounded-lg overflow-hidden shadow-lg">
+                    <img src="img/zoro.webp" alt="رورونوا زورو" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">رورونوا زورو</h3>
+                        <p class="text-gray-300 mb-4">مبارز السيف الأول في القراصنة، يطمح لأن يصبح أقوى مبارز سيف في العالم.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">هاكي الملاحظة</span>
+                            <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm">هاكي التسلط</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- سانجي -->
+                <div class="character-card rounded-lg overflow-hidden shadow-lg">
+                    <img src="img/Sanji.webp" alt="فينسموك سانجي" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">فينسموك سانجي</h3>
+                        <p class="text-gray-300 mb-4">طباخ القراصنة، متخصص في القتال بالقدمين، يبحث عن البحر الأزرق.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">هاكي الملاحظة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فواكه الشيطان -->
+    <section id="devil-fruits" class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-400 mb-12">فواكه الشيطان</h2>
+            <button onclick="toggleDevilFruitsList()" class="mx-auto block bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-full transition duration-300 mb-8">
+                عرض جميع فواكه الشيطان
+            </button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- باراميسيا -->
+                <div class="fruit-type rounded-lg p-6 cursor-pointer" onclick="toggleFruitTypes('paramecia')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">الباراميسيا</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="paramecia-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">تمنح المستخدم قدرات خاصة غير مرتبطة بالعناصر الطبيعية.</p>
+                </div>
+                
+                <!-- زوان -->
+                <div class="fruit-type rounded-lg p-6 cursor-pointer" onclick="toggleFruitTypes('zoan')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">الزوان</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="zoan-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">تمنح المستخدم القدرة على التحول إلى حيوان أو هجين بين الإنسان والحيوان.</p>
+                </div>
+                
+                <!-- لوجيا -->
+                <div class="fruit-type rounded-lg p-6 cursor-pointer" onclick="toggleFruitTypes('logia')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">اللوجيا</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="logia-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">تمنح المستخدم القدرة على التحول إلى عنصر طبيعي والتحكم فيه.</p>
+                </div>
+            </div>
+            
+            <!-- أنواع الباراميسيا -->
+            <div id="paramecia-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">أشهر فواكه الباراميسيا</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الغومو الغومو</h4>
+                        <p class="text-gray-300">تمنح الجسم خصائص المطاط (لوفي)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الأوبي الأوبي</h4>
+                        <p class="text-gray-300">تمنح القدرة على إنشاء غرف خاصة (دوفلامينغو)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة السوبي السوبي</h4>
+                        <p class="text-gray-300">تمنح القدرة على غسل أي شيء (ألاستير)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- أنواع الزوان -->
+            <div id="zoan-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">أشهر فواكه الزوان</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الهيتو الهيتو</h4>
+                        <p class="text-gray-300">نموذج البشر (تشوبر)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة النيكو النيكو</h4>
+                        <p class="text-gray-300">نموذج النمر (لوتشي)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الفينيكس</h4>
+                        <p class="text-gray-300">زوان أسطوري (ماركو)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- أنواع اللوجيا -->
+            <div id="logia-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">أشهر فواكه اللوجيا</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الميرا الميرا</h4>
+                        <p class="text-gray-300">قدرة النار (آيس)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة البوكي البوكي</h4>
+                        <p class="text-gray-300">قدرة الضوء (كيزارو)</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">فاكهة الغورو الغورو</h4>
+                        <p class="text-gray-300">قدرة البرق (إينيل)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جميع فواكه الشيطان في القصة -->
+            <div id="devilFruitsList" class="mt-16 hidden">
+                <h3 class="text-3xl font-bold text-center text-amber-400 mb-8">جميع فواكه الشيطان التي ظهرت في القصة</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- باراميسيا -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-amber-400 mb-3">الباراميسيا</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• الغومو الغومو (لوفي)</li>
+                            <li>• الأوبي الأوبي (دوفلامينغو)</li>
+                            <li>• السوبي السوبي (ألاستير)</li>
+                            <li>• البارو البارو (باجي)</li>
+                            <li>• البومو البومو (بوني)</li>
+                            <li>• النورو النورو (فوكس)</li>
+                            <li>• الدورو الدورو (تريبول)</li>
+                            <li>• الهانا الهانا (روبين)</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- زوان -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-amber-400 mb-3">الزوان</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• الهيتو الهيتو (تشوبر)</li>
+                            <li>• النيكو النيكو (لوتشي)</li>
+                            <li>• الفينيكس (ماركو)</li>
+                            <li>• الدراكون (كايدو)</li>
+                            <li>• المامو المامو (دالتون)</li>
+                            <li>• الكيوبيرا الكيوبيرا (فوكورو)</li>
+                            <li>• الزو زو (كريك)</li>
+                            <li>• الباكو الباكو (باكي)</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- زوان أسطوري -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-amber-400 mb-3">الزوان الأسطوري</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• الفينيكس (ماركو)</li>
+                            <li>• الدراكون (كايدو)</li>
+                            <li>• سينغو سينغو (سنجوكو)</li>
+                            <li>• ياماتو نو أوروتشي (ياماتو)</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- لوجيا -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-amber-400 mb-3">اللوجيا</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• الميرا الميرا (آيس)</li>
+                            <li>• البوكي البوكي (كيزارو)</li>
+                            <li>• الغورو الغورو (إينيل)</li>
+                            <li>• الموكو الموكو (أوكيجي)</li>
+                            <li>• السونا السونا (كروكودايل)</li>
+                            <li>• الماغو الماغو (أكينو)</li>
+                            <li>• الغاسو الغاسو (سيزار)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الهاكي -->
+    <section id="haki" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-400 mb-12">قوة الهاكي</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- هاكي الملاحظة -->
+                <div class="haki-type rounded-lg p-6 cursor-pointer" onclick="toggleHakiTypes('observation')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">هاكي الملاحظة</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="observation-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">القدرة على الشعور بوجود الآخرين وتوقع تحركاتهم.</p>
+                </div>
+                
+                <!-- هاكي التسلط -->
+                <div class="haki-type rounded-lg p-6 cursor-pointer" onclick="toggleHakiTypes('armament')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">هاكي التسلط</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="armament-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">القدرة على تعزيز الهجمات والدفاع، وإصابة مستخدمي اللوجيا.</p>
+                </div>
+                
+                <!-- هاكي الملوك -->
+                <div class="haki-type rounded-lg p-6 cursor-pointer" onclick="toggleHakiTypes('conqueror')">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-amber-400">هاكي الملوك</h3>
+                        <i class="fas fa-chevron-down text-amber-400 transition-transform duration-300" id="conqueror-arrow"></i>
+                    </div>
+                    <p class="text-gray-300 mt-2">قوة نادرة تمكن المستخدم من إخضاع الآخرين بإرادته.</p>
+                </div>
+            </div>
+            
+            <!-- هاكي الملاحظة التفاصيل -->
+            <div id="observation-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">هاكي الملاحظة</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى الأساسي</h4>
+                        <p class="text-gray-300">الشعور بوجود الآخرين وتوقع تحركاتهم القريبة</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: زورو، سانجي، معظم القادة في العالم الجديد</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى المتقدم</h4>
+                        <p class="text-gray-300">رؤية المستقبل القريب، قراءة مشاعر الآخرين</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: كاتاكوري، لوفي بعد التدريب</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- هاكي التسلط التفاصيل -->
+            <div id="armament-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">هاكي التسلط</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى الأساسي</h4>
+                        <p class="text-gray-300">تعزيز الهجمات والدفاع، إصابة مستخدمي اللوجيا</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: سينتومارو، معظم مقاتلي العالم الجديد</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى المتقدم</h4>
+                        <p class="text-gray-300">اختراق الدفاعات الداخلية (هاكي التدمير الداخلي)</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: رايلي، لوفي بعد التدريب</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- هاكي الملوك التفاصيل -->
+            <div id="conqueror-types" class="hidden-content mb-8">
+                <h3 class="text-2xl font-bold text-amber-400 mb-6">هاكي الملوك</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى الأساسي</h4>
+                        <p class="text-gray-300">إخضاع الضعفاء بالإرادة، صدمة الهاكي</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: لوفي، كيد، هانكوك، شانكس</p>
+                    </div>
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold text-white">المستوى المتقدم</h4>
+                        <p class="text-gray-300">تسليح الهاكي، إصابة الأعداء دون لمسهم</p>
+                        <p class="text-amber-400 mt-2">مستخدمون: روجر، وايتبيرد، كايدو، بيغ موم، لوفي</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- حرب فواكه الشيطان -->
+    <section id="devil-fruit-battle" class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-400 mb-12">حرب فواكه الشيطان</h2>
+            
+            <div class="bg-gray-900 rounded-xl p-8 max-w-3xl mx-auto border-2 border-amber-500">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="fruit-selector">
+                        <label class="block text-lg font-bold text-amber-400 mb-3">الفاكهة الأولى</label>
+                        <select id="fruit1" class="w-full bg-gray-800 border border-amber-500 text-white p-3 rounded-lg focus:ring-2 focus:ring-amber-400">
+                            <option value="">اختر فاكهة شيطان</option>
+                            <option value="gomo">الغومو الغومو (باراميسيا)</option>
+                            <option value="mera">الميرا الميرا (لوجيا)</option>
+                            <option value="buki">البوكي البوكي (لوجيا)</option>
+                            <option value="hito">الهيتو الهيتو (زوان)</option>
+                            <option value="neko">النيكو النيكو (زوان)</option>
+                            <option value="phoenix">الفينيكس (زوان أسطوري)</option>
+                        </select>
+                    </div>
+                    <div class="fruit-selector">
+                        <label class="block text-lg font-bold text-amber-400 mb-3">الفاكهة الثانية</label>
+                        <select id="fruit2" class="w-full bg-gray-800 border border-amber-500 text-white p-3 rounded-lg focus:ring-2 focus:ring-amber-400">
+                            <option value="">اختر فاكهة شيطان</option>
+                            <option value="gomo">الغومو الغومو (باراميسيا)</option>
+                            <option value="mera">الميرا الميرا (لوجيا)</option>
+                            <option value="buki">البوكي البوكي (لوجيا)</option>
+                            <option value="hito">الهيتو الهيتو (زوان)</option>
+                            <option value="neko">النيكو النيكو (زوان)</option>
+                            <option value="phoenix">الفينيكس (زوان أسطوري)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button onclick="compareFruits()" class="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-black font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 mx-auto block">
+                    قارن الفواكه
+                </button>
+                
+                <div id="battle-result" class="mt-8 hidden">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border-2 border-amber-500">
+                        <h3 class="text-2xl font-bold text-center text-amber-400 mb-4">نتيجة المعركة</h3>
+                        <div id="result-content" class="text-white text-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التحديات -->
+    <section id="challenges" class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-amber-400 mb-12">تحديات ون بيس</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- تحدي فاكهة الشيطان -->
+                <div class="challenge-card rounded-lg overflow-hidden">
+                    <div class="bg-gray-700 p-6">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">أي فاكهة شيطان تمثلك؟</h3>
+                        <p class="text-gray-300 mb-6">اكتشف أي فاكهة شيطان من ون بيس تعكس شخصيتك الحقيقية!</p>
+                        <button onclick="showDevilFruitQuizModal()" class="bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/30">
+                            ابدأ التحدي
+                        </button>
+                    </div>
+                    <div id="devil-fruit-result" class="hidden p-6 bg-gray-900">
+                        <h4 class="text-xl font-bold text-amber-400 mb-2">نتيجتك:</h4>
+                        <p id="fruit-result-text" class="text-gray-300"></p>
+                    </div>
+                </div>
+                
+                <!-- تحدي الهاكي -->
+                <div class="challenge-card rounded-lg overflow-hidden">
+                    <div class="bg-gray-700 p-6">
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">أي نوع من الهاكي لديك؟</h3>
+                        <p class="text-gray-300 mb-6">اختبر نفسك لتعرف أي نوع من الهاكي يطابق قوتك الداخلية!</p>
+                        <button onclick="startHakiQuiz()" class="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-full transition duration-300">
+                            ابدأ التحدي
+                        </button>
+                    </div>
+                    <div id="haki-result" class="hidden p-6 bg-gray-900">
+                        <h4 class="text-xl font-bold text-amber-400 mb-2">نتيجتك:</h4>
+                        <p id="haki-result-text" class="text-gray-300"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="bg-gray-900 py-8 border-t border-amber-500">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <img src="img/logo.png" alt="شعار ون بيس" class="h-10 pirate-logo">
+                    <p class="text-gray-400 mt-2"></p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://www.facebook.com/AnimeX2000" class="text-gray-400 hover:text-amber-400 text-xl"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-500">
+                <p>© 2023 موقع ون بيس للقراصنة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // دالة مقارنة فواكه الشيطان
+        function compareFruits() {
+            const fruit1 = document.getElementById('fruit1').value;
+            const fruit2 = document.getElementById('fruit2').value;
+            const resultDiv = document.getElementById('battle-result');
+            const resultContent = document.getElementById('result-content');
+            
+            if (!fruit1 || !fruit2) {
+                alert('الرجاء اختيار الفاكهتين للمقارنة');
+                return;
+            }
+
+            const fruitsData = {
+                gomo: {
+                    name: "الغومو الغومو (باراميسيا)",
+                    strength: 8,
+                    weakness: "ضعيفة ضد القطع",
+                    advantage: "مرونة عالية، مقاومة الصدمات",
+                    type: "باراميسيا"
+                },
+                mera: {
+                    name: "الميرا الميرا (لوجيا)",
+                    strength: 9,
+                    weakness: "ضعيفة ضد الهاكي",
+                    advantage: "تحويل الجسم للنار، هجمات نارية قوية",
+                    type: "لوجيا"
+                },
+                buki: {
+                    name: "البوكي البوكي (لوجيا)",
+                    strength: 9,
+                    weakness: "ضعيفة ضد الهاكي",
+                    advantage: "تحويل الجسم للضوء، سرعة فائقة",
+                    type: "لوجيا"
+                },
+                hito: {
+                    name: "الهيتو الهيتو (زوان)",
+                    strength: 7,
+                    weakness: "تحول جزئي فقط",
+                    advantage: "قوة حيوانية، تحسين القدرات البدنية",
+                    type: "زوان"
+                },
+                neko: {
+                    name: "النيكو النيكو (زوان)",
+                    strength: 8,
+                    weakness: "تحول جزئي فقط",
+                    advantage: "قوة النمر، سرعة ومخالب حادة",
+                    type: "زوان"
+                },
+                phoenix: {
+                    name: "الفينيكس (زوان أسطوري)",
+                    strength: 10,
+                    weakness: "استهلاك طاقة عالي",
+                    advantage: "قدرات أسطورية، شفاء سريع",
+                    type: "زوان أسطوري"
+                }
+            };
+
+            const f1 = fruitsData[fruit1];
+            const f2 = fruitsData[fruit2];
+
+            let winner = null;
+            let reason = "";
+
+            // قواعد المقارنة
+            if (f1.type === "لوجيا" && f2.type !== "لوجيا" && f2.type !== "زوان أسطوري") {
+                winner = f1;
+                reason = `فواكه اللوجيا مثل ${f1.name} تمتلك ميزة التحول إلى عنصر طبيعي مما يجعلها متفوقة على ${f2.type}`;
+            } 
+            else if (f2.type === "لوجيا" && f1.type !== "لوجيا" && f1.type !== "زوان أسطوري") {
+                winner = f2;
+                reason = `فواكه اللوجيا مثل ${f2.name} تمتلك ميزة التحول إلى عنصر طبيعي مما يجعلها متفوقة على ${f1.type}`;
+            }
+            else if (f1.type === "زوان أسطوري" && f2.type !== "زوان أسطوري") {
+                winner = f1;
+                reason = `الفواكه الأسطورية مثل ${f1.name} نادرة وقوية جدًا وتتفوق على ${f2.type}`;
+            }
+            else if (f2.type === "زوان أسطوري" && f1.type !== "زوان أسطوري") {
+                winner = f2;
+                reason = `الفواكه الأسطورية مثل ${f2.name} نادرة وقوية جدًا وتتفوق على ${f1.type}`;
+            }
+            else if (f1.strength > f2.strength) {
+                winner = f1;
+                reason = `${f1.name} لديها قوة عامة أعلى (${f1.strength}/10) مقارنة بـ ${f2.name} (${f2.strength}/10)`;
+            }
+            else if (f2.strength > f1.strength) {
+                winner = f2;
+                reason = `${f2.name} لديها قوة عامة أعلى (${f2.strength}/10) مقارنة بـ ${f1.name} (${f1.strength}/10)`;
+            }
+            else {
+                winner = null;
+                reason = "الفاكهتان متساويتان في القوة!";
+            }
+
+            // عرض النتيجة
+            resultContent.innerHTML = `
+                <div class="mb-4">
+                    <p class="text-amber-400 font-bold">${f1.name} <span class="text-white">vs</span> ${f2.name}</p>
+                </div>
+                ${winner ? `
+                <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                    <p class="text-xl font-bold text-amber-400">الفاكهة الأقوى: ${winner.name}</p>
+                    <p class="text-white mt-2">${reason}</p>
+                </div>
+                ` : `
+                <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                    <p class="text-xl font-bold text-amber-400">${reason}</p>
+                </div>
+                `}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-bold text-amber-400">مميزات ${f1.name}:</p>
+                        <p class="text-white">${f1.advantage}</p>
+                        <p class="mt-2 font-bold text-amber-400">نقاط ضعف:</p>
+                        <p class="text-white">${f1.weakness}</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-bold text-amber-400">مميزات ${f2.name}:</p>
+                        <p class="text-white">${f2.advantage}</p>
+                        <p class="mt-2 font-bold text-amber-400">نقاط ضعف:</p>
+                        <p class="text-white">${f2.weakness}</p>
+                    </div>
+                </div>
+            `;
+
+            resultDiv.classList.remove('hidden');
+        }
+
+        // تبديل عرض قائمة فواكه الشيطان
+        function toggleDevilFruitsList() {
+            const list = document.getElementById('devilFruitsList');
+            list.classList.toggle('hidden');
+        }
+
+        // تبديل أنواع فواكه الشيطان
+        function toggleFruitTypes(type) {
+            const element = document.getElementById(`${type}-types`);
+            const arrow = document.getElementById(`${type}-arrow`);
+            
+            element.classList.toggle('show-content');
+            arrow.classList.toggle('fa-chevron-down');
+            arrow.classList.toggle('fa-chevron-up');
+        }
+        
+        // تبديل أنواع الهاكي
+        function toggleHakiTypes(type) {
+            const element = document.getElementById(`${type}-types`);
+            const arrow = document.getElementById(`${type}-arrow`);
+            
+            element.classList.toggle('show-content');
+            arrow.classList.toggle('fa-chevron-down');
+            arrow.classList.toggle('fa-chevron-up');
+        }
+        
+        // تحدي فاكهة الشيطان
+        function showDevilFruitResult() {
+            const results = [
+                {
+                    name: "فاكهة الغومو الغومو (باراميسيا)",
+                    description: "مثل لوفي، أنت شخص متفائل ومرح، لديك إرادة قوية ولا تستسلم أبدًا. ضعفك هو اندفاعك الذي قد يوقعك في المشاكل أحيانًا."
+                },
+                {
+                    name: "فاكهة الأوبي الأوبي (باراميسيا)",
+                    description: "مثل دوفلامينغو، أنت ذكي ومخطط ممتاز، تعتمد على المكر والخداع. ضعفك هو غرورك الذي قد يعمي بصيرتك أحيانًا."
+                },
+                {
+                    name: "فاكهة النيكو النيكو (زوان)",
+                    description: "مثل لوتشي، أنت قوي بدنيًا وعدواني، تفضل المواجهة المباشرة. ضعفك هو خوفك من الفشل الذي قد يحد من قدراتك."
+                },
+                {
+                    name: "فاكهة البوكي البوكي (لوجيا)",
+                    description: "مثل كيزارو، أنت سريع وذكي، تعتمد على التفوق الاستراتيجي. ضعفك هو عدم صبرك الذي قد يجعلك تتخذ قرارات متسرعة."
+                }
+            ];
+            
+            const randomResult = results[Math.floor(Math.random() * results.length)];
+            
+            document.getElementById('fruit-result-text').innerHTML = `
+                <span class="font-bold text-amber-400">${randomResult.name}</span><br>
+                ${randomResult.description}
+            `;
+            
+            document.getElementById('devil-fruit-result').classList.remove('hidden');
+        }
+        
+        // تحدي الهاكي
+        function startHakiQuiz() {
+            const hakiQuiz = {
+                questions: [
+                    {
+                        text: "كيف تتعامل مع المواقف الصعبة؟",
+                        options: [
+                            { text: "بالهجوم المباشر", value: "armament" },
+                            { text: "بالتخطيط المسبق", value: "observation" },
+                            { text: "بالتفوق الاستراتيجي", value: "mixed" },
+                            { text: "بإرادتي القوية", value: "conqueror" }
+                        ]
+                    },
+                    {
+                        text: "ما هي أقوى حاسة لديك؟",
+                        options: [
+                            { text: "البصر (ألاحظ التفاصيل)", value: "observation" },
+                            { text: "السمع (أسمع ما لا يسمعه الآخرون)", value: "observation" },
+                            { text: "اللمس (أشعر بالتغيرات حولي)", value: "armament" },
+                            { text: "الحاسة السادسة (أشعر بالأشياء قبل حدوثها)", value: "conqueror" }
+                        ]
+                    },
+                    {
+                        text: "كيف تفضل حماية من تحب؟",
+                        options: [
+                            { text: "بالحماية المباشرة", value: "armament" },
+                            { text: "بالتخطيط لحمايتهم", value: "observation" },
+                            { text: "بتعليمهم حماية أنفسهم", value: "mixed" },
+                            { text: "بإرادتي التي تبعد الأذى عنهم", value: "conqueror" }
+                        ]
+                    },
+                    {
+                        text: "ما هو موقفك من القيادة؟",
+                        options: [
+                            { text: "أفضل أن أكون القائد", value: "conqueror" },
+                            { text: "أفضل أن أكون المستشار", value: "observation" },
+                            { text: "أفضل العمل بمفردي", value: "armament" },
+                            { text: "أقود عندما يتطلب الأمر", value: "mixed" }
+                        ]
+                    },
+                    {
+                        text: "كيف تتعامل مع الأعداء الأقوى منك؟",
+                        options: [
+                            { text: "أواجههم بشجاعة", value: "armament" },
+                            { text: "أبحث عن نقاط ضعفهم", value: "observation" },
+                            { text: "أستخدم ذكائي للتفوق عليهم", value: "mixed" },
+                            { text: "أعتمد على إرادتي للتغلب عليهم", value: "conqueror" }
+                        ]
+                    }
+                ],
+                results: {
+                    armament: {
+                        title: "هاكي التصلب",
+                        description: "مثل زورو، أنت شخص عملي وقوي، تفضل المواجهة المباشرة وتعتمد على قوتك البدنية وحمايتك المباشرة لمن تحب.",
+                        image: "https://i.imgur.com/9XZQZQj.jpg"
+                    },
+                    observation: {
+                        title: "هاكي الملاحظة",
+                        description: "مثل سانجي، أنت شخص حساس وذكي، تعتمد على حواسك المتطورة وقدرتك على قراءة المواقف قبل حدوثها.",
+                        image: "https://i.imgur.com/7XZQZQj.jpg"
+                    },
+                    mixed: {
+                        title: "مزيج من هاكي الملاحظة التصلب",
+                        description: "مثل لوفي بعد التدريب، لديك مزيج متوازن من القوة البدنية والقدرة على قراءة المواقف، مما يجعلك مقاتلاً متكاملاً.",
+                        image: "https://i.imgur.com/8XZQZQj.jpg"
+                    },
+                    conqueror: {
+                        title: "هاكي الملوك",
+                        description: "مثل شانكس، لديك إرادة قوية وشخصية جذابة، تستطيع إخضاع الآخرين بمجرد إرادتك وتأثيرك عليهم.",
+                        image: "https://i.imgur.com/sXZQZQj.jpg"
+                    }
+                }
+            };
+
+            // Create modal for Haki quiz
+            const modal = document.createElement('div');
+            modal.id = 'hakiQuizModal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 backdrop-blur-sm';
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-2xl w-full mx-4 border-4 border-blue-500 overflow-hidden shadow-2xl">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-5 flex justify-between items-center border-b-4 border-blue-700">
+                        <h3 class="text-2xl font-bold text-black drop-shadow-md">أي نوع من الهاكي لديك؟</h3>
+                        <button onclick="document.body.removeChild(document.getElementById('hakiQuizModal'))" class="text-black hover:text-gray-900 text-3xl transition-transform hover:rotate-90">&times;</button>
+                    </div>
+                    <div class="p-6">
+                        <div id="hakiQuizQuestions" class="space-y-6"></div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Load first question
+            loadHakiQuestion(0, hakiQuiz);
+
+            function loadHakiQuestion(index, quiz) {
+                const container = document.getElementById('hakiQuizQuestions');
+                container.innerHTML = '';
+                
+                const question = quiz.questions[index];
+                
+                const questionElement = document.createElement('div');
+                questionElement.className = 'mb-6';
+                questionElement.innerHTML = `
+                    <h4 class="text-xl font-bold text-blue-400 mb-4">${question.text}</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        ${question.options.map((option, i) => `
+                            <button onclick="answerHakiQuestion(${index}, '${option.value}', ${quiz.questions.length})" 
+                                    class="bg-gray-700 hover:bg-blue-500 hover:text-black text-white p-4 rounded-lg transition duration-300">
+                                ${option.text}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionElement);
+            }
+
+            window.answerHakiQuestion = function(questionIndex, answer, totalQuestions) {
+                userAnswers[questionIndex] = answer;
+                
+                if (questionIndex < totalQuestions - 1) {
+                    loadHakiQuestion(questionIndex + 1, hakiQuiz);
+                } else {
+                    showHakiResult(hakiQuiz);
+                }
+            };
+
+            function showHakiResult(quiz) {
+                // Simple scoring - count occurrences of each type
+                const score = {};
+                userAnswers.forEach(answer => {
+                    score[answer] = (score[answer] || 0) + 1;
+                });
+                
+                // Get type with highest score
+                let resultKey = 'armament';
+                let maxScore = 0;
+                
+                for (const [key, value] of Object.entries(score)) {
+                    if (value > maxScore) {
+                        maxScore = value;
+                        resultKey = key;
+                    }
+                }
+                
+                const result = quiz.results[resultKey];
+                const container = document.getElementById('hakiQuizQuestions');
+                
+                container.innerHTML = `
+                    <div class="text-center py-4 animate-fade-in">
+                        <h4 class="text-3xl font-bold text-blue-400 mb-6 drop-shadow-lg">نتيجتك:</h4>
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 p-8 rounded-xl border-2 border-blue-500 shadow-lg">
+                            <h5 class="text-2xl font-bold text-white mb-4">${result.title}</h5>
+                            <p class="text-gray-300 text-lg">${result.description}</p>
+                            <img src="${result.image}" alt="${result.title}" class="mt-6 mx-auto h-48 object-contain rounded-lg border-2 border-blue-500 shadow-lg">
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-4 mt-8">
+                            <button onclick="startHakiQuiz()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-black font-bold py-3 px-8 rounded-full transition-all duration-200 transform hover:scale-80 shadow-lg">
+                                إعادة الاختبار
+                            </button>
+                            <button onclick="document.body.removeChild(document.getElementById('hakiQuizModal'))" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                الخروج
+                            </button>
+                            <button onclick="location.href='#'" class="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                العودة للصفحة الرئيسية
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let userAnswers = [];
+        }
+        
+        // تنشيط القائمة المتنقلة على الأجهزة الصغيرة
+        document.querySelector('.md\\:hidden').addEventListener('click', function() {
+            const navLinks = document.querySelector('.hidden.md\\:flex');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.classList.add('flex-col', 'absolute', 'top-16', 'right-0', 'bg-gray-900', 'w-full', 'p-4', 'space-y-4', 'border-t', 'border-amber-500');
+            }
+        });
+    </script>
+
+    <!-- Devil Fruit Quiz Modal -->
+    <div id="devilFruitQuizModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+        <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl max-w-2xl w-full mx-4 border-2 border-amber-400/30 overflow-hidden shadow-2xl animate-[fadeIn_0.5s_ease-out]">
+            <div class="bg-gradient-to-r from-amber-400 to-amber-600 p-6 flex justify-between items-center border-b border-amber-300/30">
+                <h3 class="text-3xl font-extrabold text-black drop-shadow-lg tracking-wide">أي فاكهة شيطان تمثلك؟</h3>
+                <button onclick="closeDevilFruitQuiz()" class="text-black hover:text-gray-900 text-3xl transition-all duration-300 hover:rotate-180 hover:scale-125">&times;</button>
+            </div>
+            <div class="p-6">
+                <div id="quizQuestionsContainer" class="space-y-8"></div>
+                <div id="quizResultContainer" class="hidden">
+                    <div class="text-center py-4 animate-[fadeIn_0.5s_ease-out]">
+                        <h4 class="text-4xl font-extrabold text-amber-400 mb-8 drop-shadow-lg tracking-wide">نتيجتك:</h4>
+                        <div id="quizResultContent" class="bg-gradient-to-br from-gray-800/80 via-gray-700/80 to-gray-800/80 p-8 rounded-2xl border border-amber-400/30 shadow-xl backdrop-blur-sm">
+                            <h5 id="resultTitle" class="text-3xl font-bold text-white mb-6 tracking-wide"></h5>
+                            <p id="resultDescription" class="text-gray-300 text-lg leading-relaxed"></p>
+                            <img id="resultImage" src="" alt="" class="mt-8 mx-auto h-56 object-contain rounded-xl border-2 border-amber-400/50 shadow-xl transition-all duration-500 hover:scale-105">
+                        </div>
+                        <div class="flex justify-center gap-6 mt-10">
+                            <button onclick="restartQuiz()" class="bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-extrabold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-amber-500/40">
+                                إعادة الاختبار
+                            </button>
+                            <button onclick="closeDevilFruitQuiz()" class="bg-gradient-to-r from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                الخروج
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Devil Fruit Quiz Data
+        const devilFruitQuiz = {
+            questions: [
+                {
+                    text: "ما هي صفتك الأبرز؟",
+                    options: [
+                        { text: "المرح والتفاؤل", value: "luffy" },
+                        { text: "الذكاء والتخطيط", value: "doflamingo" },
+                        { text: "القوة البدنية", value: "lucci" },
+                        { text: "السرعة والخفة", value: "kizaru" }
+                    ]
+                },
+                {
+                    text: "كيف تفضل القتال؟",
+                    options: [
+                        { text: "باستخدام الأسلحة", value: "zoro" },
+                        { text: "بالقوة البدنية", value: "luffy" },
+                        { text: "بالمكر والخداع", value: "doflamingo" },
+                        { text: "بالتفوق الاستراتيجي", value: "kizaru" }
+                    ]
+                },
+                {
+                    text: "ما هو هدفك في الحياة؟",
+                    options: [
+                        { text: "أن تصبح الأقوى", value: "lucci" },
+                        { text: "أن تصبح الأغنى", value: "doflamingo" },
+                        { text: "أن تصبح الأكثر حرية", value: "luffy" },
+                        { text: "أن تحقق حلمك الخاص", value: "law" }
+                    ]
+                },
+                {
+                    text: "ما هي أعظم قوتك؟",
+                    options: [
+                        { text: "الإرادة القوية", value: "luffy" },
+                        { text: "الذكاء الحاد", value: "doflamingo" },
+                        { text: "السرعة الفائقة", value: "kizaru" },
+                        { text: "القدرة على التكيف", value: "lucci" }
+                    ]
+                },
+                {
+                    text: "ما هو أكبر ضعف لديك؟",
+                    options: [
+                        { text: "الاندفاع", value: "luffy" },
+                        { text: "الغرور", value: "doflamingo" },
+                        { text: "الخوف من الفشل", value: "lucci" },
+                        { text: "عدم الصبر", value: "kizaru" }
+                    ]
+                }
+            ],
+            results: {
+                luffy: {
+                    title: "فاكهة الغومو الغومو (باراميسيا)",
+                    description: "مثل لوفي، أنت شخص متفائل ومرح، لديك إرادة قوية ولا تستسلم أبدًا. ضعفك هو اندفاعك الذي قد يوقعك في المشاكل أحيانًا.",
+                    image: "img/go.png"
+                },
+                doflamingo: {
+                    title: "فاكهة الأوبي الأوبي (باراميسيا)",
+                    description: "مثل دوفلامينغو، أنت ذكي ومخطط ممتاز، تعتمد على المكر والخداع. ضعفك هو غرورك الذي قد يعمي بصيرتك أحيانًا.",
+                    image: "img/obi.png"
+                },
+                lucci: {
+                    title: "فاكهة النيكو النيكو (زوان)",
+                    description: "مثل لوتشي، أنت قوي بدنيًا وعدواني، تفضل المواجهة المباشرة. ضعفك هو خوفك من الفشل الذي قد يحد من قدراتك.",
+                    image: "img/neko.png"
+                },
+                kizaru: {
+                    title: "فاكهة يامي يامي (لوجيا)",
+                    description: "مثل مارشال دي تيتش، أنت سريع وذكي، تعتمد على التفوق الاستراتيجي. ضعفك هو عدم صبرك الذي قد يجعلك تتخذ قرارات متسرعة.",
+                    image: "img/yami.png"
+                }
+            }
+        };
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+
+        function showDevilFruitQuizModal() {
+            document.getElementById('devilFruitQuizModal').classList.remove('hidden');
+            loadQuestion(0);
+        }
+
+        function closeDevilFruitQuiz() {
+            document.getElementById('devilFruitQuizModal').classList.add('hidden');
+            resetQuiz();
+        }
+
+        function loadQuestion(index) {
+            const container = document.getElementById('quizQuestionsContainer');
+            container.innerHTML = '';
+            
+            const question = devilFruitQuiz.questions[index];
+            
+            const questionElement = document.createElement('div');
+            questionElement.className = 'mb-8 animate-[fadeIn_0.3s_ease-out]';
+            questionElement.innerHTML = `
+                <h4 class="text-2xl font-extrabold text-amber-400 mb-6 tracking-wide drop-shadow-md">${question.text}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${question.options.map((option, i) => `
+                        <button onclick="selectAnswer(${index}, '${option.value}')" 
+                                class="bg-gradient-to-br from-gray-800 to-gray-900 hover:from-amber-500 hover:to-amber-600 text-white hover:text-black font-medium p-5 rounded-xl border border-gray-700 hover:border-amber-400 transition-all duration-300 transform hover:scale-[1.02] shadow-md hover:shadow-amber-500/30">
+                            ${option.text}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            
+            container.appendChild(questionElement);
+        }
+
+        function selectAnswer(questionIndex, answer) {
+            userAnswers[questionIndex] = answer;
+            
+            if (questionIndex < devilFruitQuiz.questions.length - 1) {
+                loadQuestion(questionIndex + 1);
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            // Simple scoring - count occurrences of each character
+            const score = {};
+            userAnswers.forEach(answer => {
+                score[answer] = (score[answer] || 0) + 1;
+            });
+            
+            // Get character with highest score
+            let resultKey = 'luffy';
+            let maxScore = 0;
+            
+            for (const [key, value] of Object.entries(score)) {
+                if (value > maxScore) {
+                    maxScore = value;
+                    resultKey = key;
+                }
+            }
+            
+            const result = devilFruitQuiz.results[resultKey];
+            
+            document.getElementById('quizQuestionsContainer').classList.add('hidden');
+            document.getElementById('quizResultContainer').classList.remove('hidden');
+            
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+            document.getElementById('resultImage').src = result.image;
+            document.getElementById('resultImage').alt = result.title;
+        }
+
+        function restartQuiz() {
+            resetQuiz();
+            document.getElementById('quizResultContainer').classList.add('hidden');
+            document.getElementById('quizQuestionsContainer').classList.remove('hidden');
+            loadQuestion(0);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+        }
+    </script>
+
+    <!-- Story Arcs Modal -->
+    <div id="storyArcsModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-4xl w-full mx-4 border-4 border-amber-500 overflow-hidden shadow-2xl">
+            <div class="bg-gradient-to-r from-amber-500 to-amber-600 p-5 flex justify-between items-center border-b-4 border-amber-700">
+                <h3 class="text-2xl font-bold text-black drop-shadow-md">مراحل قصة ون بيس</h3>
+                <button onclick="document.getElementById('storyArcsModal').classList.add('hidden')" class="text-black hover:text-gray-900 text-3xl transition-transform hover:rotate-90">&times;</button>
+            </div>
+            <div class="p-6 max-h-[80vh] overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- East Blue Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا إيست بلو</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• رومانسية داون</li>
+                            <li>• أورانج تاون</li>
+                            <li>• قرية سيريك</li>
+                            <li>• قرية باراتي</li>
+                            <li>• أرارلونغ بارك</li>
+                            <li>• لوج تاون</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Arabasta Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا ألاباستا</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• ريفرس ماونتن</li>
+                            <li>• ويتس بي</li>
+                            <li>• ليتل جاردن</li>
+                            <li>• دروم آيلاند</li>
+                            <li>• ألاباستا</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Sky Island Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا سكايبيا</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• جايا</li>
+                            <li>• سكايبيا</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Water 7 Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا ووتر 7</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• لونغ رينغ لونغ لاند</li>
+                            <li>• ووتر 7</li>
+                            <li>• إنيس لوبي</li>
+                            <li>• بوست إنيس لوبي</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Thriller Bark Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا ثريلر بارك</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• ثريلر بارك</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Summit War Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا حرب القمة</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• سابودي أرخبيل</li>
+                            <li>• أمازون ليلي</li>
+                            <li>• إمبل داون</li>
+                            <li>• مارينفورد</li>
+                            <li>• بوست وور</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Fish-Man Island Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا فيش مان آيلاند</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• رجوع القراصنة</li>
+                            <li>• فيش مان آيلاند</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Dressrosa Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا دريسروزا</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• بانك هازارد</li>
+                            <li>• دريسروزا</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Whole Cake Island Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا هول كيك آيلاند</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• زو</li>
+                            <li>• توت لاند</li>
+                            <li>• هول كيك آيلاند</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Wano Country Saga -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <h4 class="text-xl font-bold text-amber-400 mb-3">ساجا وانو كونتري</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• وانو كونتري</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Characters Modal -->
+    <div id="charactersModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden backdrop-blur-sm">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-4xl w-full mx-4 border-4 border-amber-500 overflow-hidden shadow-2xl">
+            <div class="bg-gradient-to-r from-amber-500 to-amber-600 p-5 flex justify-between items-center border-b-4 border-amber-700">
+                <h3 class="text-2xl font-bold text-black drop-shadow-md">شخصيات القصة</h3>
+                <button onclick="document.getElementById('charactersModal').classList.add('hidden')" class="text-black hover:text-gray-900 text-3xl transition-transform hover:rotate-90">&times;</button>
+            </div>
+            <div class="p-6 max-h-[80vh] overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- لوفي -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <div class="flex items-center mb-4">
+                            <img src="img/luffy.jpg" alt="لوفي" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500">
+                            <h4 class="text-xl font-bold text-amber-400 mr-3">مونكي دي لوفي</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white"><span class="font-bold text-amber-400">القوة:</span> فاكهة الغومو الغومو (باراميسيا)</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط القوة:</span> إرادة حديدية، مرونة عالية، قيادة</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط الضعف:</span> اندفاع، حماقة، ضعف ضد القطع</p>
+                        </div>
+                    </div>
+                    
+                    <!-- زورو -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <div class="flex items-center mb-4">
+                            <img src="img/zoro.webp" alt="زورو" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500">
+                            <h4 class="text-xl font-bold text-amber-400 mr-3">رورونوا زورو</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white"><span class="font-bold text-amber-400">القوة:</span> سيف ثلاثي الأساليب</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط القوة:</span> قوة بدنية هائلة، هاكي التسلط، إصرار</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط الضعف:</span> ضعف في الملاحة، عناد</p>
+                        </div>
+                    </div>
+                    
+                    <!-- سانجي -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <div class="flex items-center mb-4">
+                            <img src="img/Sanji.webp" alt="سانجي" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500">
+                            <h4 class="text-xl font-bold text-amber-400 mr-3">فينسموك سانجي</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white"><span class="font-bold text-amber-400">القوة:</span> قتال بالقدمين، هاكي الملاحظة</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط القوة:</span> سرعة فائقة، ذكاء تكتيكي، طباخ ممتاز</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط الضعف:</span> ضعف أمام النساء، عدم استخدام اليدين</p>
+                        </div>
+                    </div>
+                    
+                    <!-- نامي -->
+                    <div class="bg-gray-700 rounded-lg p-4 border border-amber-500">
+                        <div class="flex items-center mb-4">
+                            <img src="https://i.imgur.com/nXZQZQj.jpg" alt="نامي" class="w-16 h-16 rounded-full object-cover border-2 border-amber-500">
+                            <h4 class="text-xl font-bold text-amber-400 mr-3">نامي</h4>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white"><span class="font-bold text-amber-400">القوة:</span> ملاحة، خريطة الطقس</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط القوة:</span> ذكاء حاد، مهارات ملاحية، تكتيكات</p>
+                            <p class="text-white"><span class="font-bold text-amber-400">نقاط الضعف:</span> قوة بدنية محدودة، جشع</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
